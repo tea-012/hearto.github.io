@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>HEARTO — Заказать фигурку</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style/adabtive.css">
+<style>
+:root {
+    --blue-main: #5B4BFF;
+    --blue-light: #8A7CFF;
+    --purple-text: #4A3D8F;
+    --purple-dark: #3A2D7A;
+    --raspberry: #97277A;
+    --raspberry-bright: #C93367;
+    --hint-text: #7B70B0;
+    --card-bg: rgba(255, 255, 255, 0.55);
+    --card-border: rgba(91, 75, 255, 0.2);
+    
+    /* ===== ЦВЕТ ГРАНИЦ ПОЛЕЙ ===== */
+    --input-border: #878cd4;
+    --input-focus: #B4356C;
+    --input-focus-ring: rgba(180, 53, 108, 0.18);
+}
+
+/* ===== ФОНОВАЯ СЕКЦИЯ + ПЛАВНЫЙ ПЕРЕХОД К ФУТЕРУ ===== */
+.order-page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    /* Градиент плавно темнеет внизу для органичного слияния с футером */
+    background: linear-gradient(
+        180deg,
+        #EEEDFF 0%,
+        #d2cdf7 25%,
+        #b7aceb 50%,
+        #afa0eb 70%,
+        #9386d6 82%,
+        #62538b 100%
+    );
+    padding-top: 80px;
+    padding-bottom: 60px;
+    overflow: hidden;
+}
+
+/* Если у вас футер конкретного цвета, замените #7B68AE в градиенте на него */
+
+/* ===== ЗВЁЗДЫ ===== */
+.stars-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.9), 0 0 12px rgba(138, 124, 255, 0.5);
+    animation: twinkle var(--dur) ease-in-out infinite var(--del);
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.25; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+.order-container {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.order-info {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--card-border);
+}
+
+.order-info__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--purple-dark);
+    margin-bottom: 14px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.order-info__title span {
+    display: block;
+    font-size: 16px;
+    color: var(--blue-main);
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.order-info__text {
+    font-size: 13px;
+    color: var(--purple-text);
+    line-height: 1.65;
+    margin-bottom: 14px;
+}
+
+.order-info__hint {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue-main);
+    line-height: 1.5;
+    margin-top: 0;
+}
+
+.order-form-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--card-border);
+}
+
+.form-group { margin-bottom: 14px; }
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--purple-dark);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--input-border); /* #B4356C */
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    color: var(--purple-dark);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #AFA4E0;
+    font-size: 13px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px var(--input-focus-ring);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-group textarea { min-height: 140px; resize: vertical; }
+
+.form-group .hint {
+    font-size: 11.5px;
+    color: var(--hint-text);
+    margin-top: 4px;
+    padding-left: 2px;
+    font-style: italic;
+}
+
+.form-group label .req { color: var(--raspberry); font-size: 14px; }
+
+.contact-note {
+    background: rgba(91, 75, 255, 0.08);
+    border: 1px dashed rgba(91, 75, 255, 0.35);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    font-size: 12.5px;
+    color: var(--purple-text);
+    line-height: 1.5;
+}
+
+.contact-note i { margin-right: 6px; color: var(--raspberry); }
+.contact-note strong { color: var(--raspberry); }
+
+.file-upload-area { margin-bottom: 14px; }
+.file-upload-area > label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--purple-dark);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.file-drop-zone {
+    border: 2px dashed var(--input-border);
+    border-radius: 14px;
+    padding: 28px 16px;
+    text-align: center;
+    transition: border-color 0.3s, background 0.3s;
+    background: rgba(255, 255, 255, 0.4);
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.file-drop-zone:hover {
+    border-color: var(--input-focus);
+    background: rgba(180, 53, 108, 0.06);
+}
+
+.file-drop-zone.dragover {
+    border-color: var(--input-focus);
+    background: rgba(180, 53, 108, 0.1);
+    border-style: solid;
+}
+
+.file-drop-zone__icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+    pointer-events: none;
+}
+
+.file-drop-zone__text {
+    font-size: 13px;
+    color: var(--hint-text);
+    line-height: 1.5;
+    pointer-events: none;
+}
+
+.file-drop-zone__text strong {
+    color: var(--input-focus);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.file-drop-zone input[type="file"] { display: none; }
+.file-drop-zone__clickable { cursor: pointer; display: block; }
+
+.file-preview-list {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.file-preview-item {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--input-border);
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.file-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    -webkit-user-drag: none;
+}
+
+.file-preview-item__remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    background: var(--raspberry);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    z-index: 2;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #97277A, #C93367);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 20px rgba(151, 39, 122, 0.3);
+    margin-bottom: 20px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(151, 39, 122, 0.4);
+}
+.btn-submit:active { transform: translateY(0); }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.example-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 24px 20px;
+    border: 1px solid var(--card-border);
+    margin-bottom: 40px;
+}
+
+.example-card__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--purple-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.example-card__text {
+    font-size: 13px;
+    color: var(--purple-text);
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.success-message {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+}
+.success-message.show { display: block; }
+.success-message__icon { font-size: 48px; margin-bottom: 16px; }
+.success-message__title { font-size: 20px; font-weight: 700; color: var(--purple-dark); margin-bottom: 10px; }
+.success-message__text { font-size: 14px; color: var(--blue-main); line-height: 1.6; }
+
+@media (max-width: 480px) {
+    .order-info, .order-form-card, .example-card { padding: 20px 16px; border-radius: 16px; }
+    .order-info__title { font-size: 18px; }
+    .form-group input, .form-group textarea { padding: 11px 14px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+<div class="container header-inner">
+<div class="logo" onclick="location.href='index.html'">HEARTO</div>
+<button class="burger" id="burgerBtn">☰</button>
+<nav>
+<a href="index.html#portfolio">Работы</a>
+<a href="about.html">О мастере</a>
+<a href="index.html#process">Процесс</a>
+<a href="delivery.html">Доставка</a>
+<a href="order.html" class="btn">Заказать</a>
+</nav>
+</div>
+</header>
+
+<!-- ORDER PAGE -->
+<section class="order-page">
+    <div class="stars-bg" id="starsBg"></div>
+
+    <div class="order-container">
+        <div class="order-info">
+            <div class="order-info__title">
+                Заявка на изготовление фигурки
+                <span>Как оформить заявку?</span>
+            </div>
+            <p class="order-info__text">
+                Опишите свою идею подробно: примерный размер, цвета, стиль, материалы и
+                особенности фигурки. Прикрепите фото или рисунки, которые помогут
+                точнее понять ваши пожелания.
+            </p>
+            <p class="order-info__hint">
+                Ваши личные данные — чтобы я могла с вами связаться 💌
+            </p>
+        </div>
+
+        <div class="order-form-card" id="orderFormCard">
+<form action="https://formsubmit.co/heartforms10w01@gmail.com" method="POST" enctype="multipart/form-data">
+    <!-- Скрытые поля для настройки -->
+    <input type="hidden" name="_subject" value="Новый заказ HEARTO!">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+                <div class="contact-note">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Обязательно:</strong> заполните <u>описание заказа</u> и хотя бы один способ связи — <strong>почту</strong> или <strong>вконтакте</strong>. Остальное — на ваше усмотрение.
+                </div>
+
+                <div class="form-group">
+                    <label>Почта <span class="req">*</span></label>
+                    <input type="email" id="email"  name="email" placeholder="example@mail.ru" autocomplete="email">
+                    <div class="hint">* или заполните Месседжер</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Месседжер<span class="req">*</span></label>
+                    <input type="text" id="telegram" name="telegram" placeholder="@username" autocomplete="username">
+                    <div class="hint">* или заполните Почту</div>
+                </div>
+
+                <div class="form-group">
+                    <label>ФИО</label>
+                    <input type="text" id="fio" name="name" placeholder="Иванова Иван Иванович" autocomplete="name">
+                    <div class="hint">можно не заполнять</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Адрес доставки</label>
+                    <input type="text" id="address" name="address" placeholder="Город, индекс, адрес" autocomplete="street-address">
+                    <div class="hint">можно не заполнять — обсудим лично</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+                    <div class="hint">можно не заполнять</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Описание заказа <span class="req">*</span></label>
+                    <textarea id="description" name="description" placeholder="Опишите вашу идею: размер, цвета, стиль, материалы, особенности фигурки..." required></textarea>
+                    <div class="hint">самое важное поле — опишите максимально подробно</div>
+                </div>
+
+                <div class="file-upload-area">
+                    <label>Прикрепить референсы</label>
+                    <div class="file-drop-zone" id="fileDropZone">
+                        <div class="file-drop-zone__clickable" id="fileClickTrigger">
+                            <div class="file-drop-zone__icon">📎</div>
+                            <div class="file-drop-zone__text">
+                                <strong>Нажмите для загрузки</strong> или перетащите файлы сюда<br>
+                                <small style="color:#AFA4E0;">Фото, рисунки — jpg, png, pdf</small>
+                            </div>
+                        </div>
+                    </div>
+                   <input type="file" id="fileInput" name="file" multiple accept="image/*,.pdf" 
+       style="position:absolute; opacity:0; width:0; height:0; pointer-events:none;">
+                    <div class="file-preview-list" id="filePreviewList"></div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span id="submitText">Отправить</span>
+                </button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                <div class="success-message__icon">🎉</div>
+                <div class="success-message__title">Заявка отправлена!</div>
+                <div class="success-message__text">
+                    Спасибо! Я свяжусь с вами в ближайшее время<br>
+                    для обсуждения деталей ✨
+                </div>
+            </div>
+        </div>
+
+        <div class="example-card">
+            <div class="example-card__title">Примеры описаний</div>
+            <div class="example-card__text">
+• Маленькая фигурка котика. 10 см в высоту. Белый, с милой улыбкой и закрытыми глазами.
+
+• Мой персонаж, хочется чиби версию. У нее яркие волосы зеленого цвета, поза стоит на ногах. Руки держит по бокам, самоуверенная улыбка. Рассчитываю на сумму 700 рублей.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ПОМОЩНИК -->
+<div id="assistantOpen" class="assistant-open">💬</div>
+<div id="assistant" class="assistant">
+    <div id="questions" class="assistant-questions"></div>
+    <div id="message" class="assistant-text"></div>
+    <div class="assistant-character">
+        <img id="characterImg" src="images/talk.jfif" alt="Помощник">
+    </div>
+    <button id="assistantClose" class="assistant-close">⭐</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div><h3>HEARTO</h3><p>Авторские игрушки</p></div>
+<div>
+<h4>Навигация</h4>
+<a href="index.html#portfolio">Работы</a>
+<a href="about.html">О мастере</a>
+<a href="index.html#process">Процесс</a>
+<a href="delivery.html">Доставка</a>
+<a href="order.html">Заказать</a>
+</div>
+<div>
+    <h4>Документы</h4>
+    <a href="privacy.html">Политика конфиденциальности</a>
+    <a href="terms.html">Пользовательское соглашение</a>
+</div>
+</div>
+</div>
+<div class="copyright"><p>© 2026 HEARTO</p></div>
+</div>
+</footer>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<audio id="typingSound" src="sounds/typing.wav" preload="auto"></audio>
+
+<script src="script.js"></script>
+<script>
+// ===== ГЕНЕРАЦИЯ ЗВЁЗД =====
+(function createStars() {
+    const container = document.getElementById('starsBg');
+    if (!container) return;
+    const count = 80;
+    for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 2;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.setProperty('--dur', (Math.random() * 4 + 2.5) + 's');
+        star.style.setProperty('--del', (Math.random() * 6) + 's');
+        container.appendChild(star);
+    }
+})();
+
+
+/* =========================
+FORMSUBMIT + ПРЕВЬЮ ФАЙЛОВ (FIXED)
+========================= */
+document.addEventListener('DOMContentLoaded', () => {
+    const orderForm = document.getElementById('orderForm');
+    const fileInput = document.getElementById('fileInput');
+    const dropZone = document.getElementById('fileDropZone');
+    const trigger = document.getElementById('fileClickTrigger');
+    const previewList = document.getElementById('filePreviewList');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMessage = document.getElementById('successMessage');
+
+    // Массив для хранения выбранных файлов (чтобы можно было удалять по одному)
+    let selectedFiles = [];
+
+    // 1. Клик по зоне -> открываем выбор
+    if (trigger && fileInput) {
+        trigger.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            fileInput.click(); 
+        });
+    }
+
+    // 2. Обработка выбора файлов через диалоговое окно
+    if (fileInput) {
+        fileInput.addEventListener('change', () => {
+            addFiles(Array.from(fileInput.files));
+            fileInput.value = ''; // Очищаем инпут, чтобы можно было выбрать тот же файл снова
+        });
+    }
+
+    // 3. Drag & Drop логика
+    if (dropZone) {
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt => {
+            dropZone.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); });
+        });
+        
+        dropZone.addEventListener('dragover', () => dropZone.classList.add('drag-active'));
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-active'));
+        
+        dropZone.addEventListener('drop', (e) => {
+            dropZone.classList.remove('drag-active');
+            const files = e.dataTransfer.files;
+            if (files.length) addFiles(Array.from(files));
+        });
+    }
+
+    // Функция добавления файлов в массив
+    function addFiles(newFiles) {
+        newFiles.forEach(file => {
+            // Проверка на дубликаты
+            if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                selectedFiles.push(file);
+            }
+        });
+        renderPreviews();
+    }
+
+    // Функция отрисовки превью
+    function renderPreviews() {
+        if (!previewList) return;
+        previewList.innerHTML = '';
+        
+        selectedFiles.forEach((file, index) => {
+            const item = document.createElement('div');
+            item.className = 'file-preview-item';
+
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                const reader = new FileReader();
+                reader.onload = e => { img.src = e.target.result; };
+                reader.readAsDataURL(file);
+                item.appendChild(img);
+            } else {
+                // Иконка для не-картинок
+                item.style.display = 'flex';
+                item.style.alignItems = 'center';
+                item.style.justifyContent = 'center';
+                item.style.background = '#EEEDFF';
+                item.style.fontSize = '24px';
+                item.textContent = '📄';
+            }
+
+            // Кнопка удаления
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'file-preview-item__remove';
+            removeBtn.innerHTML = '✕';
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectedFiles.splice(index, 1); // Удаляем из массива
+                renderPreviews(); // Перерисовываем
+            });
+            
+            item.appendChild(removeBtn);
+            previewList.appendChild(item);
+        });
+    }
+
+    // 4. Отправка формы через Fetch (чтобы не перезагружать страницу)
+    if (orderForm) {
+        orderForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Простая валидация перед отправкой
+            const email = document.getElementById('email').value.trim();
+            const desc = document.getElementById('description').value.trim();
+            
+            if (!email || !desc) {
+                alert('Пожалуйста, заполните Email и Описание заказа ✨');
+                return;
+            }
+
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Отправляю... ⏳';
+
+            // Создаем FormData
+            const formData = new FormData(orderForm);
+            
+            // ВАЖНО: FormSubmit ожидает файлы в поле с именем "attachment" (как в HTML)
+            // Но так как мы используем свой массив selectedFiles, нам нужно добавить их вручную
+            // Сначала очищаем поле attachment в formData, если там что-то осталось
+            formData.delete('attachment');
+            
+            selectedFiles.forEach(file => {
+                formData.append('attachment', file);
+            });
+
+            try {
+                const response = await fetch(orderForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    orderForm.style.display = 'none';
+                    if (successMessage) successMessage.style.display = 'block';
+                    // Очистка
+                    selectedFiles = [];
+                    renderPreviews();
+                } else {
+                    alert('Ошибка при отправке. Попробуйте позже.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Ошибка сети. Проверьте подключение.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        });
+    }
+});
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>HEARTO — авторские игрушки</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style/adabtive.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+<div class="container header-inner">
+<div class="logo" onclick="location.href='index.html'">Мастерская</div>
+<button class="burger" id="burgerBtn">☰</button>
+<nav>
+<a href="#portfolio">Работы</a>
+<a href="about.html">О мастере</a>
+<a href="#process">Процесс</a>
+<a href="delivery.html">Доставка</a>
+<a href="order.html" class="btn">Заказать</a>
+</nav>
+</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+<div class="container hero-inner">
+<div class="hero-text">
+<h1>Авторские игрушки<br>в смешанных техниках</h1>
+<p class="hero-sub">Глина. Шерсть. Характер.<br>Каждая — единственная.</p>
+<a href="#portfolio" class="btn">Смотреть работы</a>
+</div>
+</div>
+</section>
+
+<!-- ПРОЦЕСС СОЗДАНИЯ -->
+<section id="process" class="fade">
+  <div class="container">
+    <h2>Процесс создания</h2>
+    <div class="process-grid">
+      
+      <div class="step-card">
+        <div class="icon"><i class="fas fa-lightbulb"></i></div>
+        <h3>Идея</h3>
+        <p>Ты описываешь, что хочешь — я предлагаю концепт</p>
+      </div>
+
+      <div class="step-card">
+        <div class="icon"><i class="fas fa-pencil-alt"></i></div>
+        <h3>Эскиз</h3>
+        <p>Создаю набросок и согласовываю все детали</p>
+      </div>
+
+      <div class="step-card">
+        <div class="icon"><i class="fas fa-hands"></i></div>
+        <h3>Создание</h3>
+        <p>Шью или леплю вручную с любовью к деталям</p>
+      </div>
+
+      <div class="step-card">
+        <div class="icon"><i class="fas fa-box-open"></i></div>
+        <h3>Отправка</h3>
+        <p>Аккуратно упаковываю и отправляю вам</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ПРИМЕРЫ РАБОТ -->
+<section id="portfolio" class="fade">
+  <div class="container">
+    <h2>Примеры работ</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="images/rabota/679.png" alt="Осьминожка">
+        <div class="card-info">
+          <h4>Осьминожка</h4>
+          <p>глина, акрил. Подобного формата малыши стоят от...</p>
+          <div class="card-price">200 ₽</div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/rabota/rab1.jpg" alt="Лягушка">
+        <div class="card-info">
+          <h4>Лягушка</h4>
+          <p>глина, акрил. Стоит подобный...</p>
+          <div class="card-price">300 ₽</div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/rabota/corova.png" alt="Коровка">
+        <div class="card-info">
+          <h4>Коровка</h4>
+          <p>глина, шерсть, акрил. Подобный формат стоит...</p>
+          <div class="card-price">850 ₽</div>
+        </div>
+      </div>
+      <!-- Дополнительные работы -->
+      <div class="card extra-work" style="display: none;">
+        <img src="images/extra1.jpg" alt="Доп. работа">
+        <div class="card-info">
+          <h4>В процессе</h4>
+          <p>В процессе</p>
+          <div class="card-price"></div>
+        </div>
+      </div>
+      <div class="card extra-work" style="display: none;">
+        <img src="images/extra2.jpg" alt="Доп. работа">
+        <div class="card-info">
+          <h4>В процессе</h4>
+          <p>В процессе</p>
+          <div class="card-price"></div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-footer">
+      <button id="toggleExtraBtn" class="btn-toggle">Показать ещё работы</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== АВТОРСКИЙ МЕРЧ ===== -->
+<section id="merch">
+  <div class="container">
+    <div class="merch-content">
+      <h2>Авторский мерч</h2>
+      <p>Брелки, наклейки, значки и так далее. Что-то из этих предметов пойдёт в подарок к вашему мягкому или не очень другу. В будущем планируется расшириться, и можно будет заказывать у меня подобные вещички отдельно.</p>
+    </div>
+    
+    <!-- Декоративные элементы с параллаксом -->
+    <!-- data-speed: сила движения (от 5 до 15 — оптимально для лёгкого покачивания) -->
+    <div class="merch-decorations">
+      <img src="images/planet.png" alt="Планета" class="decor-img parallax-item" data-speed="15" style="top: 15%; right: 10%;">
+      <img src="images/star1.png" alt="Звезда 1" class="decor-img parallax-item" data-speed="8" style="top: 25%; left: 5%;">
+      <img src="images/star2.png" alt="Звезда 2" class="decor-img parallax-item" data-speed="12" style="bottom: 25%; right: 15%;">
+      <img src="images/star3.png" alt="Звезда 3" class="decor-img parallax-item" data-speed="6" style="bottom: 15%; left: 15%;">
+    </div>
+  </div>
+</section>
+
+<!-- ПОМОЩНИК -->
+<div id="assistantOpen" class="assistant-open">💬</div>
+<div id="assistant" class="assistant">
+<div id="questions" class="assistant-questions"></div>
+<div id="message" class="assistant-text"></div>
+<div class="assistant-character">
+<img id="characterImg" src="images/talk.png" alt="Помощник">
+</div>
+<button id="assistantClose" class="assistant-close">⭐</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div><h3>HEARTO</h3><p>Авторские игрушки</p></div>
+<div>
+<h4>Навигация</h4>
+<a href="#portfolio">Работы</a>
+<a href="about.html">О мастере</a>
+<a href="#process">Процесс</a>
+<a href="delivery.html">Доставка</a>
+<a href="order.html">Заказать</a>
+</div>
+<div>
+    <h4>Документы</h4>
+    <a href="privacy.html">Политика конфиденциальности</a>
+    <a href="terms.html">Пользовательское соглашение</a>
+</div>
+<div>
+</div>
+</div>
+</div>
+<div class="copyright"><p>© 2026 HEARTO</p></div>
+</div>
+</footer>
+
+<!-- МОДАЛКА -->
+<div id="workModal" class="modal-overlay">
+<div class="modal-box">
+<button class="modal-close">&times;</button>
+<img class="modal-img" src="" alt="">
+<div class="modal-info">
+<h3 class="modal-title"></h3>
+<p class="modal-desc"></p>
+</div>
+</div>
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<audio id="typingSound" src="sounds/typing.wav" preload="auto"></audio>
+<script src="script.js"></script>
+</body>
+</html>
